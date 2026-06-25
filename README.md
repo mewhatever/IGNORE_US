@@ -114,13 +114,23 @@ UI runs at **http://localhost:5173**
 - Secrets via environment variables only
 - `agent_summary` never requests PIN, OTP, password, or card numbers
 
-## Deployment Notes
+## Deployment
 
-1. Deploy PostgreSQL (or use managed DB)
-2. Set `DATABASE_URL`, `JWT_SECRET`, `CORS_ORIGIN` env vars
-3. Deploy backend with HTTPS (Render, Railway, Fly, EC2, etc.)
-4. Build frontend: `cd frontend && npm run build`
-5. Serve static files or deploy frontend separately with `VITE_API_URL` pointing to your API
+**Full Vercel deployment guide:** see [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+Quick summary:
+
+1. Create a [Neon](https://neon.tech) PostgreSQL database and run `npm run db:init`
+2. Push to GitHub and import the repo on [Vercel](https://vercel.com)
+3. Set production env vars (`DATABASE_URL`, `JWT_SECRET`, `CORS_ORIGIN`, LLM keys)
+4. Deploy — API at `/health`, `/sort-ticket`; dashboard at `/`
+
+| Variable | Production |
+|----------|------------|
+| `JWT_SECRET` | 32+ char random string |
+| `CORS_ORIGIN` | `https://your-app.vercel.app` |
+| `DATABASE_URL` | Neon connection string with `?sslmode=require` |
+| `VITE_API_URL` | Leave empty (same-origin on Vercel) |
 
 ## LLM Usage
 
