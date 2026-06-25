@@ -83,12 +83,15 @@ DEMO_AGENT_PASSWORD=YourStrongPasswordHere123!
 
 | Setting | Value |
 |---------|-------|
-| Framework Preset | **Other** |
-| Root Directory | `.` (repo root) |
-| Build Command | `npm run build` (from `vercel.json`) |
+| Framework Preset | **Other** (not Create React App) |
+| Root Directory | `.` (repo root — leave blank / do not set `frontend`) |
+| Build Command | Override ON → `npm run vercel-build` |
 | Output Directory | `frontend/dist` |
+| Install Command | `npm install` |
 
-4. Click **Deploy** (it will fail until env vars are set — that's OK)
+> **Important:** If Framework Preset is "Create React App", Vercel runs `react-scripts build` and the deploy will fail. This project uses **Vite**, not CRA.
+
+4. Click **Deploy** (it may fail until env vars are set — that's OK)
 
 ---
 
@@ -177,6 +180,8 @@ Open `https://YOUR-PROJECT.vercel.app` and sign in with your `DEMO_AGENT_*` cred
 
 | Issue | Fix |
 |-------|-----|
+| `react-scripts build` exited with 127 | Framework Preset is wrong. Set to **Other**, Build Command to `npm run vercel-build`, redeploy latest `main` commit |
+| Deploy uses old commit without `vercel.json` | Redeploy from latest `main` (must include `vercel.json` at repo root) |
 | `database: unavailable` | Check `DATABASE_URL`, run `npm run db:init`, verify Neon project is active |
 | `JWT_SECRET must be at least 32 characters` | Set a longer secret in Vercel env vars |
 | Login works locally but not on Vercel | Set `CORS_ORIGIN` to exact Vercel URL (no trailing slash) |

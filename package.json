@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "npm run build --prefix frontend",
+    "vercel-build": "npm install --prefix frontend && npm run build --prefix frontend",
     "db:init": "node backend/scripts/init-db.mjs"
   },
   "engines": {
